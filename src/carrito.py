@@ -1,4 +1,5 @@
 # src/carrito.py
+import math
 from src.cupones import GestorCupones
 
 class ItemCarrito:
@@ -34,7 +35,7 @@ class Carrito:
             raise ValueError("Error: Subtotal insuficiente para aplicar el cupón SABANERO10.")
         self.cupon_aplicado = codigo
 
-    def liquidar_compra(self, municipio: str) -> dict:
+    def liquidar_compra(self, municipio: str, categoria_cliente: str = "ESTÁNDAR") -> dict:
         # 1. Subtotal
         subtotal = sum(item.producto.precio * item.cantidad for item in self.items.values())
 
@@ -69,10 +70,16 @@ class Carrito:
         # 5. Total General (HU-05 CA3)
         total_pagar = subtotal - monto_descuento + total_iva + costo_envio
 
+        # 6. Puntos acumulados (HU-06)
+        total_sin_envio = subtotal - monto_descuento + total_iva
+        puntos_base = math.floor(total_sin_envio / 1000)
+        puntos_finales = puntos_base * 2 if categoria_cliente.upper() == "ORO" else puntos_base
+
         return {
             "subtotal": subtotal,
             "descuento": monto_descuento,
             "iva": total_iva,
             "envio": costo_envio,
-            "total": total_pagar
+            "total": total_pagar,
+            "puntos": puntos_finales
         }
