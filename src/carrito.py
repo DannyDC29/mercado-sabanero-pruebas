@@ -35,19 +35,44 @@ class Carrito:
         self.cupon_aplicado = codigo
 
     def liquidar_compra(self, municipio: str) -> dict:
+        # 1. Subtotal
         subtotal = sum(item.producto.precio * item.cantidad for item in self.items.values())
 
-        # Descuento por Volumen (HU-03)
+        # 2. Descuentos (HU-03 y HU-04)
         pct_volumen = 0.10 if subtotal >= 500000 else (0.05 if subtotal >= 200000 else 0.0)
-
-        # Descuento por Cupón (HU-04)
         pct_cupon = 0.10 if self.cupon_aplicado == "SABANERO10" and subtotal >= 50000 else 0.0
 
-        # CA4: Se aplica únicamente el mayor entre ambos descuentos (no se suman)
         pct_descuento_final = max(pct_volumen, pct_cupon)
         monto_descuento = round(subtotal * pct_descuento_final)
 
+        # 3. Cálculo de IVA con descuento aplicado (HU-02)
+        total_iva = 0.0
+        suma_base_productos_con_iva = 0
+        for item in self.items.values():
+            base_item = (item.producto.precio * item.cantidad) * (1 - pct_descuento_final)
+            iva_item = base_item * item.producto.tarifa_iva
+            total_iva += iva_item
+
+            if item.producto.tarifa_iva > 0:
+                suma_base_productos_con_iva += (item.producto.precio * item.cantidad)
+
+        total_iva = round(total_iva)
+
+        # 4. Cálculo de Envío (HU-05)
+        if self.cupon_aplicado == "ENVIOGRATIS" or suma_base_productos_con_iva >= 150000:
+            costo_envio = 0
+        elif municipio.lower() == "sincelejo":
+            costo_envio = 8000
+        else:
+            costo_envio = 15000
+
+        # 5. Total General (HU-05 CA3)
+        total_pagar = subtotal - monto_descuento + total_iva + costo_envio
+
         return {
             "subtotal": subtotal,
-            "descuento": monto_descuento
+            "descuento": monto_descuento,
+            "iva": total_iva,
+            "envio": costo_envio,
+            "total": total_pagar
         }
