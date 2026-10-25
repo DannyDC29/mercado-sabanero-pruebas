@@ -134,6 +134,6 @@ El sistema incluye la verificación automatizada del caso de prueba de la guía 
   * **Subtotal:** $228.000
   * **Descuento (5% volumen):** $11.400
   * **IVA (base imponible reducida):** $33.915
-  * **Costo de Envío:** $0 (envío gratis por suma de productos con IVA $\ge$ $150.000)
+  * **Costo de Envío:** $0 (envío gratis por suma de productos con IVA ≥ $150.000)
   * **Total a Pagar:** $250.515
   * **Puntos Acumulados:** 250 puntos
