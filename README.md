@@ -18,6 +18,14 @@ Este repositorio contiene la implementación y el conjunto de pruebas unitarias 
 **Asignatura:** Electiva Profesional en Ingeniería del Software  
 **Institución:** Corporación Universitaria del Caribe – CECAR  
 
+## Declaración del Uso de Inteligencia Artificial
+
+En el desarrollo de este proyecto se utilizó la herramienta de Inteligencia Artificial **Google Gemini** como soporte académico para:
+
+* **Comparativa de Tecnologías:** Análisis comparativo entre diferentes lenguajes de programación (Java, C#, Python, JS) y frameworks de pruebas para seleccionar la pila tecnológica más eficiente para el proyecto (Python + `pytest`).
+* **Comprensión de Conceptos:** Profundización en las prácticas de TDD (*Red-Green-Refactor*), patrón AAA (*Arrange-Act-Assert*), diseño de pruebas parametrizadas y aislamiento mediante dobles de prueba (*Mocks*).
+* **Estructuración y Generación:** Apoyo en la estructuración de la documentación del proyecto, maquetación de informes técnicos y aceleración en la escritura de la lógica de negocio y casos de prueba.
+
 ---
 
 ## Tecnologías y Herramientas
